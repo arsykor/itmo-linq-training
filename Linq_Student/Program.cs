@@ -129,6 +129,56 @@ namespace Linq_Student
                     student.Last, student.First);
                 }
             }
+
+            Console.WriteLine("----- Let -----");
+
+            //Ключевое слово let можно использовать для представления идентификатора для
+            //любого результата выражения в выражении запроса.
+
+            var studentQuery5 =
+                from student in students
+                let totalScore = student.Scores[0] + student.Scores[1] + student.Scores[2] + student.Scores[3]
+                where totalScore / 4 < student.Scores[0]
+                select student.Last + " " + student.First;
+            foreach (string s in studentQuery5)
+            {
+                Console.WriteLine(s);
+            }
+
+            //Использование синтаксиса метода в выражении запроса
+
+            var studentQuery6 =
+                from student in students
+                let totalScore = student.Scores[0] + student.Scores[1] + student.Scores[2] + student.Scores[3]
+                select totalScore;
+
+            double averageScore = studentQuery6.Average();
+
+            Console.WriteLine("Class average score = {0}", averageScore);
+
+            //Преобразование или проецирование в предложении select
+
+            IEnumerable<string> studentQuery7 =
+                from student in students
+                where student.Last == "Garcia"
+                select student.First;
+
+            Console.WriteLine("The Garcias in the class are:");
+            foreach (string s in studentQuery7)
+            {
+                Console.WriteLine(s);
+            }
+
+            var studentQuery8 =
+                from student in students
+                let x = student.Scores[0] + student.Scores[1] + student.Scores[2] + student.Scores[3]
+                where x > averageScore
+                select new { id = student.ID, score = x };
+
+            foreach (var item in studentQuery8)
+            {
+                Console.WriteLine("Student ID: {0}, Score: {1}", item.id, item.score);
+            }
         }
 
     }
