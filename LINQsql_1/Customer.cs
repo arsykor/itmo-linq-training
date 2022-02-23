@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,20 @@ namespace LINQsql_1
     [Table(Name = "Customers")]
     public class Customer
     {
+        //Связывание c Orders 
+        private EntitySet<Order> _Orders;
+        public Customer()
+        {
+            this._Orders = new EntitySet<Order>();
+        }
+
+        [Association(Storage = "_Orders", OtherKey = "CustomerID")]
+        public EntitySet<Order> Orders
+        {
+            get { return this._Orders; }
+            set { this._Orders.Assign(value); }
+        }
+
         private string _CustomerID;
 
         [Column(IsPrimaryKey = true, Storage = "_CustomerID")]

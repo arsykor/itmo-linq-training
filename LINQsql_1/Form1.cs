@@ -65,5 +65,20 @@ namespace LINQsql_1
                 db.SubmitChanges();
             }
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var custQuery =
+                from cust in db.GetTable<Customer>()
+                where cust.Orders.Any() //где есть заказы вообще
+                select cust;
+
+            foreach (var custObj in custQuery)
+            {
+                ListViewItem item = listView1.Items.Add(custObj.CustomerID.ToString());
+                item.SubItems.Add(custObj.City.ToString());
+                item.SubItems.Add(custObj.Orders.Count.ToString());
+            }
+        }
     }
 }
