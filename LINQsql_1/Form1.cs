@@ -44,7 +44,7 @@ namespace LINQsql_1
         private void button3_Click(object sender, EventArgs e)
         {
             Customer cust = new Customer();
-            cust.CustomerID = "WINGT";
+            cust.CustomerID = "DEMOO";
             cust.City = "London";
             cust.CompanyName = "Steve Lasker";
 
@@ -56,7 +56,7 @@ namespace LINQsql_1
         {
             var deleteIndivCust =
                 from cust in db.GetTable<Customer>()
-                where cust.CustomerID == "WINGT"
+                where cust.CustomerID == "DEMOO"
                 select cust;
 
             if (deleteIndivCust.Count() > 0)
